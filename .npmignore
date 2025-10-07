@@ -1,0 +1,38 @@
+# Source files
+nodes/
+credentials/
+*.ts
+tsconfig.json
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+test/
+
+# Documentation (keep README.md)
+# README.md is included by default
+
+# Environment
+.env
+.env.local
+.env.*.local
+

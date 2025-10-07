@@ -1,0 +1,60 @@
+{
+  "name": "n8n-nodes-quickenrich",
+  "version": "0.1.0",
+  "description": "n8n community node for QuickEnrich API - Email enrichment and employee data search",
+  "keywords": [
+    "n8n-community-node-package",
+    "quickenrich",
+    "email",
+    "enrichment",
+    "employee",
+    "data",
+    "automation"
+  ],
+  "license": "MIT",
+  "homepage": "https://quickenrich.io",
+  "author": {
+    "name": "Brandon Charleson",
+    "email": "170791+bcharleson@users.noreply.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcharleson/n8n-nodes-quickenrich.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bcharleson/n8n-nodes-quickenrich/issues"
+  },
+  "scripts": {
+    "build": "n8n-node build && cp credentials/quickenrich.svg dist/credentials/ && cp nodes/QuickEnrich/quickenrich.svg dist/nodes/QuickEnrich/ && cp index.js dist/",
+    "build:watch": "tsc --watch",
+    "dev": "n8n-node dev",
+    "lint": "n8n-node lint",
+    "lint:fix": "n8n-node lint --fix"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/QuickEnrichApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/QuickEnrich/QuickEnrich.node.js"
+    ]
+  },
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=1.0.0"
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "*",
+    "eslint": "9.32.0",
+    "prettier": "3.6.2",
+    "typescript": "5.9.2"
+  }
+}
+
