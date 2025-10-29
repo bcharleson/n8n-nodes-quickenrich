@@ -39,6 +39,8 @@ export class QuickEnrichApi implements ICredentialType {
 			qs: {
 				linkedin_url: 'https://www.linkedin.com/in/test',
 			},
+			skipSslCertificateValidation: false,
+			ignoreHttpStatusErrors: true,
 		},
 	};
 }

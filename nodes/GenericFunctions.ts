@@ -47,7 +47,16 @@ export async function quickEnrichApiRequest(
 		// Extract and return the data field if it exists
 		if (response && typeof response === 'object') {
 			if (response.success === false) {
-				// Handle API error responses
+				// Handle 404 (not found) as a valid empty result for search operations
+				if (response.code === 404) {
+					return {
+						success: false,
+						message: response.message || 'Employee not found',
+						data: null,
+					};
+				}
+
+				// Handle other API error responses
 				const errorMessage = response.message || 'Unknown error occurred';
 				const errorCode = response.code || 500;
 				throw new NodeApiError(this.getNode(), {
@@ -82,6 +91,13 @@ export async function quickEnrichApiRequest(
 					message: 'Rate limit exceeded',
 					description: 'You have exceeded the API rate limit. Please try again later.',
 				});
+			} else if (statusCode === 404) {
+				// Handle 404 (not found) as a valid empty result for search operations
+				return {
+					success: false,
+					message: errorBody.message || 'Employee not found',
+					data: null,
+				};
 			} else if (statusCode === 400) {
 				const message = errorBody.message || 'Invalid request parameters';
 				throw new NodeApiError(this.getNode(), {

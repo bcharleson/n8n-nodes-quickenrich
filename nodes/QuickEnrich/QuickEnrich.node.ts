@@ -3,7 +3,6 @@ import {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
-	NodeConnectionType,
 	NodeOperationError,
 } from 'n8n-workflow';
 
@@ -21,8 +20,8 @@ export class QuickEnrich implements INodeType {
 		defaults: {
 			name: 'QuickEnrich',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [
 			{
 				name: 'quickEnrichApi',
@@ -225,12 +224,25 @@ export class QuickEnrich implements INodeType {
 						queryParams,
 					);
 
-					const executionData = this.helpers.constructExecutionMetaData(
-						this.helpers.returnJsonArray(responseData),
-						{ itemData: { item: i } },
-					);
-
-					returnData.push(...executionData);
+					// Check if the response indicates "not found"
+					// This is a valid result for a search operation, not an error
+					if (responseData && responseData.success === false && responseData.code === 404) {
+						const executionData = this.helpers.constructExecutionMetaData(
+							[{ json: {
+								found: false,
+								message: responseData.message || 'Employee not found',
+								searchParams: queryParams,
+							}}],
+							{ itemData: { item: i } },
+						);
+						returnData.push(...executionData);
+					} else {
+						const executionData = this.helpers.constructExecutionMetaData(
+							this.helpers.returnJsonArray(responseData),
+							{ itemData: { item: i } },
+						);
+						returnData.push(...executionData);
+					}
 				}
 			} catch (error) {
 				if (this.continueOnFail()) {
