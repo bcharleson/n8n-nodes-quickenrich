@@ -35,3 +35,8 @@ coverage/
 *.tmp
 .cache/
 
+# Logo source files
+quickenrich_logo.png
+quickenrich_logo_small.png
+quickenrich_logo_base64.txt
+quickenrich_logo_small_base64.txt
