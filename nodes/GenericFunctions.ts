@@ -9,6 +9,29 @@ import {
 } from 'n8n-workflow';
 
 /**
+ * Normalize a URL by removing protocol and www prefix
+ * Examples:
+ * - http://www.topoffunnel.com -> topoffunnel.com
+ * - https://topoffunnel.com -> topoffunnel.com
+ * - www.topoffunnel.com -> topoffunnel.com
+ * - topoffunnel.com -> topoffunnel.com
+ */
+export function normalizeUrl(url: string): string {
+	if (!url) return url;
+
+	// Remove protocol (http://, https://)
+	let normalized = url.replace(/^https?:\/\//, '');
+
+	// Remove www. prefix
+	normalized = normalized.replace(/^www\./, '');
+
+	// Remove trailing slash
+	normalized = normalized.replace(/\/$/, '');
+
+	return normalized;
+}
+
+/**
  * Make an API request to QuickEnrich
  */
 export async function quickEnrichApiRequest(

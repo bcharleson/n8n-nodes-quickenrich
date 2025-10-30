@@ -6,7 +6,7 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-import { quickEnrichApiRequest } from '../GenericFunctions';
+import { quickEnrichApiRequest, normalizeUrl } from '../GenericFunctions';
 
 export class QuickEnrich implements INodeType {
 	description: INodeTypeDescription = {
@@ -210,7 +210,8 @@ export class QuickEnrich implements INodeType {
 							);
 						}
 
-						queryParams.company_url = companyUrl.trim();
+						// Normalize the company URL to remove protocol and www prefix
+						queryParams.company_url = normalizeUrl(companyUrl.trim());
 						queryParams.first_name = firstName.trim();
 						queryParams.last_name = lastName.trim();
 					}
